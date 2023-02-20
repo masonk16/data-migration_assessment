@@ -2,29 +2,30 @@
 #!/usr/bin/env python
 
 import pandas
-import csv
 
 
-def rows_to_csv(filepath, rows, columns=[]):
+def rows_to_csv(filepath, rows):
     """
     Takes list of dictionaries and filepath and outputs a spreadsheet
     Params:
         rows(list):
             A list of dictionaries
-        
-        columns(list):
-            A list of the key in the rows that you want to export in the csv file
-            by default it will display all      
-    """
 
-    
+        filepath:
+            path to create new csv with updated stock numbers
+    """
+    df = pandas.DataFrame.from_dict(rows)
+    updated_csv = df.to_csv(filepath, index=False, header=True)
+
+    return updated_csv
+
+
 def csv_to_rows(filepath):
     """
     Converts csv file to list of dicts.
     """
-    
+
     df = pandas.read_csv(filepath)
-    data = df.dropna(axis=0, subset=['Artist']).to_dict('records')
-   
+    data = df.dropna(axis=0, subset=["Artist"]).to_dict("records")
+
     return data
-        
